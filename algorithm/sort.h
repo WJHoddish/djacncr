@@ -1,6 +1,17 @@
 #pragma once
 
-#include "vector.h"
+// Copyright (C) summer 2019 Jiaheng Wang
+// License(BSD)
+// Author: Jiaheng Wang <wjhgeneral@outlook.com>
+// Sorting algorithms in C++.
+//
+
+#ifndef DJA_SORT_H_
+#define DJA_SORT_H_
+
+#include <iostream>
+
+#include "../structure/vector.h"
 
 namespace dja {
 	/// \brief The abstract base class for sorting methods.
@@ -45,7 +56,7 @@ namespace dja {
 		}
 	};
 
-	/// \brief A template function using
+	/// \brief A template function using sorting methods (class name) as template to sort a given vector.
 	template <template <typename T> typename SortMethod, typename Comparable>
 	typename std::enable_if<std::is_base_of<Sort<Comparable>, SortMethod<Comparable>>::value>::type
 		sort(vector<Comparable>& arr) {
@@ -53,3 +64,5 @@ namespace dja {
 		sorter(arr);
 	}
 }
+
+#endif

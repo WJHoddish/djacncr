@@ -1,5 +1,11 @@
 #pragma once
 
+// Copyright (C) summer 2019 Jiaheng Wang
+// License(BSD)
+// Author: Jiaheng Wang <wjhgeneral@outlook.com>
+// This is a container, similar to the std::vector.
+//
+
 #ifndef DJA_VECTOR_H_
 #define DJA_VECTOR_H_
 
