@@ -3,17 +3,53 @@
 #include "vector.h"
 
 namespace dja {
+	/// \brief The abstract base class for sorting methods.
 	template <typename Comparable>
-	void insertionSort(vector<Comparable>& a) {
-		int k, pos, arraySize;
-		Comparable tmp;
+	class Sort {
+	public:
+		virtual void operator()(vector<Comparable>&) = 0;
+	};
 
-		arraySize = a.size();
-		for (pos = 1; pos < arraySize; pos++) {
-			tmp = a[pos];
-			for (k = pos; k > 0 && tmp < a[k - 1]; k--)
-				a[k] = a[k - 1];
-			a[k] = tmp;
+	template <typename Comparable>
+	class BubbleSort : public Sort<Comparable> {
+	public:
+		void operator()(vector<Comparable>& arr) {
+			Comparable temp;
+			int size = arr.size();
+			for (int i = 0; i < size - 1; ++i) {
+				for (int j = 0; j < size - i - 1; ++j) {
+					if (arr[j] > arr[j + 1]) {
+						temp = arr[j];
+						arr[j] = arr[j + 1];
+						arr[j + 1] = temp;
+					}
+				}
+			}
 		}
+	};
+
+	template <typename Comparable>
+	class InsertionSort : public Sort<Comparable> {
+	public:
+		void operator()(vector<Comparable>& arr) {
+			Comparable temp;
+			int size = arr.size();
+			for (int i = 1; i < size; ++i) {
+				temp = arr[i];
+				int j = i;
+				for (; j > 0 && temp < arr[j - 1]; --j) {
+					arr[j] = arr[j - 1];
+				}
+				arr[j] = temp;
+			}
+		}
+	};
+
+	/// \brief A template function using
+	template <template <typename T> typename SortMethod, typename Comparable>
+	typename std::enable_if<std::is_base_of<Sort<Comparable>, SortMethod<Comparable>>::value>::type
+		sort(vector<Comparable>& arr) {
+		SortMethod<Comparable> sorter;
+		sorter(arr);
 	}
 }

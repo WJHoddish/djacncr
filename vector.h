@@ -13,9 +13,7 @@ namespace dja {
 
 		/// \brief The constructor.
 		vector(int size = 0) {
-			setSize(size);
-			setCapacity(size_ + spare_capacity_);
-			data_ = new T[capacity_];
+			init(size);
 		}
 
 		/// \brief The copy constructor.
@@ -26,16 +24,17 @@ namespace dja {
 
 		/// \brief The destructor.
 		~vector() {
-			delete[] data_;
-			data_ = nullptr;
+			destroy();
 		}
 
 		const vector& operator=(const vector& rhs) {
 			if (this != &rhs) {
-				delete[] data_;
-				setSize(rhs.size_);
-				setCapacity(rhs.capacity_);
-				data_ = new T[capacity_];
+				destroy();
+				{
+					setSize(rhs.size_);
+					setCapacity(rhs.capacity_);
+					data_ = new T[capacity_];
+				}
 				for (int i = 0; i < size_; ++i) {
 					data_[i] = rhs.data_[i];
 				}
@@ -81,26 +80,26 @@ namespace dja {
 			}
 			return data_[idx];
 		}
-		
+
 		T& at(int idx) {
 			// thrown in for stl vector compatibility
-			return (*this)[idx]; 
+			return (*this)[idx];
 		}
 
-		const T& at(int idx) const { 
-			return (*this)[idx]; 
+		const T& at(int idx) const {
+			return (*this)[idx];
 		}
 
-		bool empty() const { 
-			return (size_ == 0); 
+		bool empty() const {
+			return (size_ == 0);
 		}
 
-		int size() const { 
-			return size_; 
+		int size() const {
+			return size_;
 		}
 
 		int capacity() const {
-			return capacity_; 
+			return capacity_;
 		}
 
 		void push_back(const T& src) {
@@ -128,28 +127,28 @@ namespace dja {
 			return data_[0];
 		}
 
-		/// \brief To 
+		/// \brief To
 		void clear() {
 			// call the overload function of assignment
-			*this = vector<T>(); 
+			*this = vector<T>();
 		}
 
 		typedef T* iterator;
 		typedef const T* const_iterator;
 
-		iterator begin() { 
+		iterator begin() {
 			return &data_[0];
 		}
 
-		const_iterator begin() const { 
+		const_iterator begin() const {
 			return &data_[0];
 		}
 
-		iterator end() { 
-			return &data_[size()]; 
+		iterator end() {
+			return &data_[size()];
 		}
 
-		const_iterator end() const { 
+		const_iterator end() const {
 			return &data_[size()];
 		}
 
@@ -170,7 +169,7 @@ namespace dja {
 				endVal = end();
 			}
 			for (iter1 = first, iter2 = last; iter2 != endVal;) {
-				*iter1++ = *iter2++; 
+				*iter1++ = *iter2++;
 			}
 			setSize(size_ - (last - first));
 			// points to first element not erased after block
@@ -188,6 +187,19 @@ namespace dja {
 
 		void setCapacity(int capacity) {
 			capacity_ = (capacity <= size_) ? size_ + spare_capacity_ : capacity;
+		}
+
+		void init(int size) {
+			setSize(size);
+			setCapacity(size_ + spare_capacity_);
+			data_ = new T[capacity_];
+		}
+
+		void destroy() {
+			if (data_) {
+				delete[] data_;
+				data_ = nullptr;
+			}
 		}
 
 		int size_;
