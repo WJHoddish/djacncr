@@ -4,15 +4,15 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "test_data.h"
+#include "include/int.h"
 
 #include "algorithm/sort.h"
 
 int main(int argc, char* argv[])
 {
-	dja::vector<Data> vec;
+	dja::vector<Int> vec;
 
-	constexpr int len = 10;
+	constexpr int len = 20;
 	for (int i = 0; i < len; ++i) {
 		vec.push_back(rand() % len);
 	}
@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 	}
 	std::cout << "\n";
 
-	dja::sort<dja::BubbleSort>(vec);
+	dja::sort<dja::ShellSort>(vec);
 	for (int i = 0; i < vec.size(); ++i) {
 		std::cout << vec[i] << " ";
 	}
