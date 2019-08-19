@@ -24,7 +24,6 @@ namespace dja {
 
 		/// \brief The copy constructor.
 		vector(const vector& src) {
-			data_ = nullptr;
 			operator=(src);
 		}
 

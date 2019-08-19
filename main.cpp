@@ -20,13 +20,20 @@ int main(int argc, char* argv[])
 	for (int i = 0; i < vec.size(); ++i) {
 		std::cout << vec[i] << " ";
 	}
-	std::cout << "\n";
 
-	dja::sort<dja::ShellSort>(vec);
-	for (int i = 0; i < vec.size(); ++i) {
-		std::cout << vec[i] << " ";
+	std::system("pause");
+
+	{
+		dja::vector<Int> vec2(vec);
+
+		std::system("pause");
+
+		dja::sort<dja::ShellSort>(vec2);
+		for (int i = 0; i < vec2.size(); ++i) {
+			std::cout << vec2[i] << " ";
+		}
+		std::cout << "\n";
 	}
-	std::cout << "\n";
 
 	return 0;
 }

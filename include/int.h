@@ -25,6 +25,7 @@ public:
 
 	const Int& operator=(const Int& rhs) {
 		if (this != &rhs) {
+			std::cout << "operator=" << "\n";
 			data_ = rhs.data_;
 		}
 		return *this;
