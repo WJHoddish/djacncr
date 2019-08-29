@@ -12,41 +12,37 @@
 #include <iostream>
 
 class Int {
-public:
-	Int(int data = 0)
-		:
-		data_(data) {}
+ public:
+  Int(int data = 0) : data_(data) {}
 
-	Int(const Int& src)
-		:
-		data_(src.data_) {}
+  Int(const Int& src) : data_(src.data_) {}
 
-	~Int() {}
+  ~Int() {}
 
-	const Int& operator=(const Int& rhs) {
-		if (this != &rhs) {
-			std::cout << "operator=" << "\n";
-			data_ = rhs.data_;
-		}
-		return *this;
-	}
+  const Int& operator=(const Int& rhs) {
+    if (this != &rhs) {
+      data_ = rhs.data_;
+    }
+    return *this;
+  }
 
-	bool operator>(const Int& rhs) {
-		return data_ > rhs.data_;
-	}
+  bool operator>(const Int& rhs) { return data_ > rhs.data_; }
 
-	bool operator<(const Int& rhs) {
-		return data_ < rhs.data_;
-	}
+  bool operator<(const Int& rhs) { return data_ < rhs.data_; }
 
-	bool operator==(const Int& rhs) {
-		return data_ == rhs.data_;
-	}
+  bool operator==(const Int& rhs) { return data_ == rhs.data_; }
 
-	friend std::ostream& operator<<(std::ostream& os, const Int& src);
+  void display() const { std::cout << data_; }
 
-private:
-	int data_;
+  friend std::ostream& operator<<(std::ostream& os, const Int& src);
+
+ private:
+  int data_;
 };
+
+inline std::ostream& operator<<(std::ostream& os, const Int& src) {
+  os << src.data_;
+  return os;
+}
 
 #endif
