@@ -32,7 +32,11 @@ class Int {
 
   bool operator==(const Int& rhs) { return data_ == rhs.data_; }
 
+  int value() const { return data_; }
+
   void display() const { std::cout << data_; }
+
+  void multiple(int num) { data_ *= num; }
 
   friend std::ostream& operator<<(std::ostream& os, const Int& src);
 

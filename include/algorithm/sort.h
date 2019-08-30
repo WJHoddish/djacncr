@@ -70,7 +70,6 @@ class ShellSort : public Sort<Comparable> {
     }
   }
 };
-
 }  // namespace dja
 
 #endif

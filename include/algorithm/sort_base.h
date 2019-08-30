@@ -26,8 +26,7 @@ class Sort {
 /// sort a given vector.
 template <template <typename T> typename SortMethod, typename Comparable>
 typename std::enable_if<
-	std::is_base_of<Sort<Comparable>, SortMethod<Comparable>>::value
->::type
+    std::is_base_of<Sort<Comparable>, SortMethod<Comparable>>::value>::type
 sort(vector<Comparable>& arr) {
   // use as a functor
   SortMethod<Comparable> sorter;
