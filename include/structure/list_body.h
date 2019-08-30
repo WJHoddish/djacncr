@@ -222,7 +222,6 @@ class list<T>::Node {
   ///< \brief the pointers to the previous & the next one
   Node *prev_, *next_;
 };
-
 }  // namespace dja
 
 #endif
