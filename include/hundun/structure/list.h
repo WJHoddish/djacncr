@@ -3,19 +3,19 @@
 // Copyright (C) summer 2019 Jiaheng Wang
 // License(BSD)
 // Author: Jiaheng Wang <wjhgeneral@outlook.com>
-// A doubly linked list implementation.
+// A doubly linked List implementation.
 //
 
-#ifndef DJA_LIST_H_
-#define DJA_LIST_H_
+#ifndef HUNDUN_LIST_H_
+#define HUNDUN_LIST_H_
 
-#include "list_body.h"
+#include "List_base.h"
 
-namespace dja {
+namespace hd {
 /// \brief The nested const iterator.
 template <typename T>
-class list<T>::const_iterator {
-  friend class list<T>;
+class List<T>::const_iterator {
+  friend class List<T>;
 
  public:
   /// \brief The constructor.
@@ -23,7 +23,7 @@ class list<T>::const_iterator {
 
   const T &operator*() const {
     if (!current_) {
-      throw Exception("list iterator is null");
+      throw Exception("List iterator is null");
     }
     return current_->data_;
   }
@@ -68,39 +68,39 @@ class list<T>::const_iterator {
 
  protected:
   /// \brief Protected constructor for use only by derived iterator, friends.
-  const_iterator(list::Node *p, const list &lst);
+  const_iterator(List::Node *p, const List &lst);
 
-  list::Node *current_;
-  const list *list_;
+  List::Node *current_;
+  const List *list_;
 };
 
 template <typename T>
-list<T>::const_iterator::const_iterator() : current_(nullptr), list_(nullptr) {}
+List<T>::const_iterator::const_iterator() : current_(nullptr), list_(nullptr) {}
 
 template <typename T>
-list<T>::const_iterator::const_iterator(list::Node *p, const list &lst)
-    : current_(p), list_(&lst) {}
-}  // namespace dja
+List<T>::const_iterator::const_iterator(List::Node *p, const List &lst)
+    : current_(p), List_(&lst) {}
+}  // namespace hd
 
-namespace dja {
+namespace hd {
 /// \brief The nested iterator.
 template <typename T>
-class list<T>::iterator : public list<T>::const_iterator {
-  friend class list<T>;
+class List<T>::iterator : public List<T>::const_iterator {
+  friend class List<T>;
 
  public:
   iterator();
 
   T &operator*() {
-    typename list<T>::Node *&current_ = list<T>::const_iterator::current_;
+    typename List<T>::Node *&current_ = List<T>::const_iterator::current_;
     if (!current_) {
-      throw Exception("list iterator is null");
+      throw Exception("List iterator is null");
     }
     return current_->data_;
   }
 
   iterator &operator++() {
-    typename list<T>::Node *&current_ = list<T>::const_iterator::current_;
+    typename List<T>::Node *&current_ = List<T>::const_iterator::current_;
     if (current_->next_ != nullptr) {
       current_ = current_->next_;
     }
@@ -108,7 +108,7 @@ class list<T>::iterator : public list<T>::const_iterator {
   }
 
   iterator &operator--() {
-    typename list<T>::Node *&current_ = list<T>::const_iterator::current_;
+    typename List<T>::Node *&current_ = List<T>::const_iterator::current_;
     if (current_->prev_ != nullptr) {
       current_ = current_->prev_;
     }
@@ -116,7 +116,7 @@ class list<T>::iterator : public list<T>::const_iterator {
   }
 
   iterator &operator++(int) {
-    typename list<T>::Node *&current_ = list<T>::const_iterator::current_;
+    typename List<T>::Node *&current_ = List<T>::const_iterator::current_;
     static iterator old;
     old = *this;
     if (current_->next_ != nullptr) {
@@ -126,7 +126,7 @@ class list<T>::iterator : public list<T>::const_iterator {
   }
 
   iterator &operator--(int) {
-    typename list<T>::Node *&current_ = list<T>::const_iterator::current_;
+    typename List<T>::Node *&current_ = List<T>::const_iterator::current_;
     static iterator old;
     old = *this;
     if (current_->prev_ != nullptr) {
@@ -137,15 +137,15 @@ class list<T>::iterator : public list<T>::const_iterator {
 
  protected:
   /// \brief A chain to the base class, call the proteted constructor of base.
-  iterator(list::Node *p, const list &lst);
+  iterator(List::Node *p, const List &lst);
 };
 
 template <typename T>
-list<T>::iterator::iterator() {}
+List<T>::iterator::iterator() {}
 
 template <typename T>
-list<T>::iterator::iterator(list::Node *p, const list &lst)
+List<T>::iterator::iterator(List::Node *p, const List &lst)
     : const_iterator(p, lst) {}
-}  // namespace dja
+}  // namespace hd
 
 #endif

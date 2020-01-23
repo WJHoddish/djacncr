@@ -3,34 +3,36 @@
 // Copyright (C) summer 2019 Jiaheng Wang
 // License(BSD)
 // Author: Jiaheng Wang <wjhgeneral@outlook.com>
-// A doubly linked list implementation.
+// A doubly linked List implementation.
 //
 
-#ifndef DJA_LIST_BODY_H_
-#define DJA_LIST_BODY_H_
+#ifndef HUNDUN_LIST_BODY_H_
+#define HUNDUN_LIST_BODY_H_
 
-#include "core/error.h"
-
-namespace dja {
+namespace hd {
 template <typename T>
-class list {
+class List {
   class Node;
 
  public:
-  class const_iterator;
-
   class iterator;
 
-  list() { init(); }
+  class const_iterator;
 
-  list(const list &src) {
+  // build/clear up an object
+
+  List() { init(); }
+
+  List(const List &src) {
     init();
     *this = src;
   }
 
-  ~list() { destroy(); }
+  ~List() { destroy(); }
 
-  const list operator=(const list &rhs) {
+  // operator overload
+
+  const List operator=(const List &rhs) {
     const_iterator iter;
     if (&rhs != this) {
       clear();
@@ -40,6 +42,8 @@ class list {
     }
     return *this;
   }
+
+  // object status
 
   bool empty() const { return (size_ == 0); }
 
@@ -53,14 +57,14 @@ class list {
 
   const T &back() const { return tail_->prev_->data_; }
 
-  /// \brief To clear the data structure up.
+  /// \brief Clear up the data structure.
   void clear() {
     while (size_ > 0) {
       pop_front();
     }
   }
 
-  /// \brief Add a new element at the head of list.
+  /// \brief Add a new element as the head of the list.
   void push_front(const T &src) {
     Node *temp = new Node(src, head_, head_->next_);
     (head_->next_)->prev_ = temp;
@@ -78,7 +82,7 @@ class list {
 
   void pop_front() {
     Node *temp;
-    if (0 == size_) {
+    if (empty()) {  // empty list
       return;
     }
     temp = head_->next_;
@@ -93,7 +97,7 @@ class list {
 
   void pop_back() {
     Node *temp;
-    if (0 == size_) {
+    if (empty()) {  // empty list
       return;
     }
     temp = tail_->prev_;
@@ -114,18 +118,18 @@ class list {
 
   iterator end() { return iterator(tail_, *this); }
 
-  /// \brief Insert new element into the list when traversing.
+  /// \brief Insert new element into the List when traversing.
   iterator insert(iterator iter, const T &src) {
-    if (iter.list_ != this) {
-      throw Exception("list iterator mismatch");
+    if (iter.List_ != this) {
+      throw Exception("List iterator mismatch");
     }
 
     Node *p = iter.current_;
     if (p == nullptr) {
-      throw Exception("list iterator is null");
+      throw Exception("List iterator is null");
     }
     if (p->prev_ == nullptr) {
-      throw Exception("list iterator is null");
+      throw Exception("List iterator is null");
     }
 
     // build a node and link it up
@@ -140,16 +144,16 @@ class list {
 
   /// \brief Erase the data represented by this iterator.
   iterator erase(iterator iter) {
-    if (iter.list_ != this) {
-      throw Exception("list iterator mismatch");
+    if (iter.List_ != this) {
+      throw Exception("List iterator mismatch");
     }
 
     Node *p = iter.current_;
     if (p == nullptr) {
-      throw Exception("list iterator is null");
+      throw Exception("List iterator is null");
     }
     if (p->prev_ == nullptr || p->next_ == nullptr) {
-      throw Exception("list iterator is null");
+      throw Exception("List iterator is null");
     }
 
     iterator ret_val(p->next_, *this);
@@ -165,17 +169,17 @@ class list {
 
   /// \brief Erase the data in a certain range.
   iterator erase(iterator start, iterator stop) {
-    if (start.list_ != this || stop.list_ != this) {
-      throw Exception("list iterator mismatch");
+    if (start.List_ != this || stop.List_ != this) {
+      throw Exception("List iterator mismatch");
     }
 
     if (start.current_ == nullptr || stop.current_ == nullptr) {
-      throw Exception("list iterator is null");
+      throw Exception("List iterator is null");
     }
 
     if (start.current_->prev_ == nullptr || start.current_->next_ == nullptr ||
         stop.current_->prev_ == nullptr) {
-      throw Exception("list iterator is null");
+      throw Exception("List iterator is null");
     }
 
     for (iterator iter = start; iter != stop;) {
@@ -199,15 +203,15 @@ class list {
     delete tail_;
   }
 
-  ///< \brief the list size
+  ///< \brief the List size
   int size_;
-  ///< \brief node sticked at head and tail in the list
+  ///< \brief node sticked at head and tail in the List
   Node *head_, *tail_;
 };
 
 template <typename T>
-class list<T>::Node {
-  friend class list<T>;
+class List<T>::Node {
+  friend class List<T>;
 
  public:
   /// \brief The constructor.
@@ -219,9 +223,10 @@ class list<T>::Node {
 
  private:
   T data_;
+
   ///< \brief the pointers to the previous & the next one
   Node *prev_, *next_;
 };
-}  // namespace dja
+}  // namespace hd
 
 #endif

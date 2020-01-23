@@ -6,25 +6,23 @@
 // This is a container, similar to the std::vector.
 //
 
-#ifndef DJA_VECTOR_H_
-#define DJA_VECTOR_H_
+#ifndef HUNDUN_VECTOR_H_
+#define HUNDUN_VECTOR_H_
 
-#include "core/error.h"
-
-namespace dja {
+namespace hd {
 template <typename T>
-class vector {
+class Vector {
  public:
   /// \brief The constructor.
-  vector(int size = 0) { init(size); }
+  Vector(int size = 0) { init(size); }
 
   /// \brief The copy constructor.
-  vector(const vector& src) { operator=(src); }
+  Vector(const Vector& src) { operator=(src); }
 
   /// \brief The destructor.
-  ~vector() { destroy(); }
+  ~Vector() { destroy(); }
 
-  const vector& operator=(const vector& rhs) {
+  const Vector& operator=(const Vector& rhs) {
     if (&rhs != this) {
       destroy();
       {
@@ -126,6 +124,7 @@ class vector {
   }
 
   typedef T* iterator;
+
   typedef const T* const_iterator;
 
   iterator begin() { return &data_[0]; }
@@ -188,11 +187,13 @@ class vector {
 
   ///< \brief a chunk of memory on the heap
   T* data_;
+
   ///< \brief the vector size which can be observed
   int size_;
+
   ///< \brief the hidden memory occupation
   int capacity_;
 };
-}  // namespace dja
+}  // namespace hd
 
 #endif

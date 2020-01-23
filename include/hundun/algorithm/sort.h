@@ -6,16 +6,16 @@
 // Sorting algorithms in C++.
 //
 
-#ifndef DJA_SORT_H_
-#define DJA_SORT_H_
+#ifndef HUNDUN_SORT_H_
+#define HUNDUN_SORT_H_
 
 #include "sort_base.h"
 
-namespace dja {
+namespace hd {
 template <typename Comparable>
 class BubbleSort : public Sort<Comparable> {
  public:
-  void operator()(vector<Comparable>& arr) {
+  void operator()(Vector<Comparable>& arr) {
     int size = arr.size();
     for (int i = 0; i < size - 1; ++i) {
       for (int j = 0; j < size - i - 1; ++j) {
@@ -32,7 +32,7 @@ class BubbleSort : public Sort<Comparable> {
 template <typename Comparable>
 class InsertionSort : public Sort<Comparable> {
  public:
-  void operator()(vector<Comparable>& arr) {
+  void operator()(Vector<Comparable>& arr) {
     int size = arr.size();
     for (int i = 1; i < size; ++i) {
       Comparable temp(arr[i]);
@@ -48,7 +48,7 @@ class InsertionSort : public Sort<Comparable> {
 template <typename Comparable>
 class PancakeSort : public Sort<Comparable> {
  public:
-  void operator()(vector<Comparable>& arr) {
+  void operator()(Vector<Comparable>& arr) {
     //
   }
 };
@@ -56,7 +56,7 @@ class PancakeSort : public Sort<Comparable> {
 template <typename Comparable>
 class ShellSort : public Sort<Comparable> {
  public:
-  void operator()(vector<Comparable>& arr) {
+  void operator()(Vector<Comparable>& arr) {
     int size = arr.size();
     for (int gap = size / 2; gap > 0; gap /= 2) {
       for (int i = gap; i < size; ++i) {
@@ -70,6 +70,6 @@ class ShellSort : public Sort<Comparable> {
     }
   }
 };
-}  // namespace dja
+}  // namespace hd
 
 #endif
